@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form</title>
+
+  <style>
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .btn-div {
+      margin-top: 30px;
+    }
+
+    .btn-div button {
+      transition: all 0.3s;
+      padding: 12px 20px;
+      border: 0;
+      outline: none;
+      background-color: goldenrod;
+      border-radius: 4px;
+    }
+
+    .btn-div button.move-right {
+      transform: translateX(400px);
+    }
+
+    .btn-div button.move-left {
+      transform: translateX(0);
+    }
+
+    .error-msg {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Next level form validation</h2>
+
+    <form name="myForm">
+      Name: <input type="text" name="fname" onkeyup="change(event)"> <br>
+      <p id="error-msg" class="error-msg"></p>
+      <div class="btn-div">
+        <button id="my-btn" type="submit">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+
+  <script>
+    let input = document.getElementsByName('fname');
+    let btn = document.getElementById('my-btn');
+    let errorMsg = document.getElementById('error-msg');
+    let len = 0;
+
+    function change(e) {
+      length = e.target.value.length;
+      len = length;
+      if (length == 0) {
+        errorMsg.innerText = '';
+      }
+      else if (length <= 5) {
+        e.target.style.color = 'red';
+        errorMsg.innerText = 'Text should be minimum 6 digit';
+      }
+      else {
+        e.target.style.color = 'green';
+        errorMsg.innerText = '';
+        btn.classList.remove('move-right');
+      }
+    }
+
+    btn.addEventListener('mouseenter', () => {
+      if (len <= 5) {
+        if (btn.classList.contains('move-right')) {
+          btn.classList.add('move-left');
+          btn.classList.remove('move-right');
+        } 
+        else {
+          btn.classList.add('move-right');
+          btn.classList.remove('move-left');
+        }
+      }
+      else{
+        btn.style.cursor = 'pointer';
+      }
+    });
+
+    btn.addEventListener('click', (e) => {
+      if (len <= 5) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+
+</html>
